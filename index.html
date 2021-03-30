@@ -29,7 +29,7 @@
 		<!-- <script type="text/javascript" src="js/main.js"></script> -->
 		<!-- *** *** -->
 		<link rel="shortcut icon" href="#">
-		<title>template</title>
+		<title>vue-dischi</title>
 	</head>
 	<body>
 
@@ -52,14 +52,29 @@
 			<div id="app">
 
 				<!-- ** HEADER ** -->
-				<div class="header">
+				<div class="header flex-row-cv fx-row-between">
 					<img src="img/Spotify_logo.png" alt="">
+					<div class="select">
+						<select name="filter1" id="filter1" 
+								v-model="filter1Selected" 
+								@change="filter1Selection">
+							<option value="">Filter for</option>
+							<option v-for="filter1 in filters" :value="filter1">{{cap(filter1)}}</option>
+						</select>
+						<select name="filter2" id="filter2"
+								v-model="filter2Selected"
+								@change="filter2Selection" 
+								v-if="filter1Selected">
+							<option value="">Filter for</option>
+							<option v-for="filter2 in filterLists[filter1Selected]" :value="filter2">{{filter2}}</option>
+						</select>
+					</div>
 				</div>
 
-				<!-- ** ITEM DISPLAY ** -->
+				<!-- ** ITEM DISPLAY PANEL ** -->
 				<div class="item_dispaly flex-row-co fx-wrap" v-if="!itemListIsEmpty">
 					<div v-for="item in itemList">
-						<div class="item_box">
+						<div class="item_box" v-if="isViewable(item)">
 							<div class="card flex-col">
 								<img :src="item.poster" :alt="item.title">
 								<div class="item_title fx-grow-1 txt_1">{{item.title}}</div>

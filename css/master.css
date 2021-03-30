@@ -44,9 +44,17 @@ a:hover {
 .header img {
 	height: 100%;	
 }
+.header .select select {
+	max-width: 200px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	outline: none;
+	color: var(--realwhite);
+	background-color: var(--bg_dark_blue);
+}
 
 /****************************************************************
-**  ITEM DISPLAY
+**  ITEM DISPLAY PANEL
 */
 .card {
 	height: 240px;
@@ -128,8 +136,9 @@ a:hover {
 .flex-col-co { display: flex; flex-direction: column; align-items: center;                          }
 .flex-col-cv { display: flex; flex-direction: column;                      justify-content: center; }
 .flex-col-cc { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.fx-row-left  { justify-content: flex-start; }
-.fx-row-right { justify-content: flex-end;   }
+.fx-row-left    { justify-content: flex-start;    }
+.fx-row-right   { justify-content: flex-end;      }
+.fx-row-between { justify-content: space-between; }
 .fx-col-left  { align-items: flex-start;     }
 .fx-col-right { align-items: flex-end;       }
 .fx-grow-0 { flex-grow: 0; }
