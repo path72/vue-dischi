@@ -6,40 +6,68 @@ var app = new Vue(
 	{
 		el: '#app',
 		data: {
-			// ** data in ** //
-			itemList: [],
-			itemListIsEmpty: true,
-			// ** controllers ** //
-			filterLists: {}, 		// oggetto con parametro1: [ valori di parametro2 ]
-			filter1Selected: '',	// selezione parametro1 = valore di parametro1
-			filter2Selected: ''		// selezione parametro2 = valore di parametro2
+			itemList: [], 			// original remote data 
+			displayItems: [],		// displayed (sortable) data
+			displayItemsAreReady: false,
+			sortSelected: '',		// parameter1 selected for sorting
+			filterLists: {}, 		// object with parameter1: [ parameter2 value list ]
+			filter1Selected: '', 	// parameter1 selected for filter
+			filter2Selected: ''		// parameter2 selected for filter
 		},
 		methods: {
 			getRemoteData() {
 				axios
 					.get('https://flynn.boolean.careers/exercises/api/array/music')
 					.then((resp)=>{
-						this.itemList = resp.data.response;
-						if (this.itemList.length > 0) this.itemListIsEmpty = false;
-						this.buildFilterList(this.itemList);
+						this.itemList = resp.data.response;	 // original data
+						this.buildFilterList(this.itemList); // object of data's parameters
 					});
 			},
 			buildFilterList(items) {
-				items.forEach((item)=>{
-					for (key in item) { // ciclo sui valori di parametro1
+				items.forEach((item)=>{ // item cycle
+					for (key in item) { // parameter1 cycle of item
 						if (this.filterLists[key] == undefined)
-							this.filterLists[key] = [];
+							this.filterLists[key] = []; // parameter2 values list
 						if (!this.filterLists[key].includes(item[key])) 
-							 this.filterLists[key].push(item[key]); // valori di parametro2
+							 this.filterLists[key].push(item[key]); // parameter2 values
 					}
 				});
-				console.log(this.filterLists);
+				// console.log(this.filterLists);
+				this.displayItems = this.itemList; // filling displayed data
+				if (this.displayItems.length > 0) this.displayItemsAreReady = true;
+			},
+			sortFilter() {
+				if (this.sortSelected) {
+					this.filterLists[this.sortSelected].sort(); // sorted parameter2 values
+					// console.log(this.filterLists[this.sortSelected]);
+					let sortedItems = []; // sorted items by sorted paramter2
+					this.filterLists[this.sortSelected].forEach((sortPar)=>{
+						this.itemList.forEach((item)=>{
+							for (key in item) {
+								if (item[key] == sortPar && !sortedItems.includes(item))
+									sortedItems.push(item);
+							}
+						});
+					});
+					this.displayItems = sortedItems;
+					// console.log(this.displayItems);
+				} else {
+					this.displayItems = this.itemList;
+				}
 			},
 			isViewable(item) {
 				if (this.filter1Selected && this.filter2Selected)
 					return (item[this.filter1Selected] == this.filter2Selected);
 				else 
 					return true;
+			},
+			isSelected(par) {
+				if (par == this.filter2Selected) return true;
+				else return false;
+			},
+			isSorted(par) {
+				if (par == this.sortSelected) return true;
+				else return false;
 			},
 			cap(string) {
 				return string[0].toUpperCase()+string.substring(1);
@@ -57,5 +85,3 @@ var app = new Vue(
 	}
 );
 // Vue.config.devtools = true;
-
-

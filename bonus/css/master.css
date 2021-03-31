@@ -19,7 +19,7 @@
 body {
 	font-family: 'Roboto', sans-serif;
 	background-color: var(--bg_dark_blue);
-	color: var(--realwhite);
+	color: var(--white);
 	font-size: 14px;
 	/* min-width: 297px;  */
 }
@@ -39,27 +39,34 @@ a:hover {
 */
 .header {
 	height: 50px;
-	padding: 5px 10px;
+	padding: 5px 15px;
 	background-color: var(--bg_light_blue);
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 	margin-bottom: 30px;
 }
 .header img {
-	height: 100%;	
+	height: 100%;
 }
-.header .select_box select {
-	max-width: 200px;
+.header .select_box select,
+.header .select_box button {
 	padding: 5px 10px;
 	border-radius: 5px;
 	outline: none;
-	color: var(--realwhite);
 	background-color: var(--bg_dark_blue);
+	color: var(--white);
+}
+.header .select_box select {
+	max-width: 150px;
+}
+.header .select_box label {
+	margin-left: 15px;
 }
 
 /****************************************************************
 **  ITEM DISPLAY PANEL
 */
 .card {
+	position: relative;
 	height: 240px;
 	padding: 15px;
 	background-color: var(--bg_light_blue);
@@ -67,25 +74,33 @@ a:hover {
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 	margin: 10px;
 }
-.item_box {
-	/* border: 1px dashed green; */
-}
-.item_box img {
+.item_display .item_box img {
 	width: 100px;
-	/* height: 100px; */
 }
-.item_title {
+.item_display .item_box .item_title {
 	margin: 15px 0;
 	width: 100px;
 	text-align: center;
 }
-.item_info {
+.item_display .item_box .item_info {
 	width: 100px;
-	/* border: 1px dashed green; */
 }
-.item_author,
-.item_year {
+.item_display .item_box .item_author,
+.item_display .item_box .item_year {
 	color: var(--info_middle_grey);
+}
+.item_display .item_box .item_info .item_genre {
+	position: absolute;
+	bottom: 3px;
+	right: 3px;
+}
+/* vue.js classes */
+.item_display .item_box .selected {
+	color: var(--green);
+}
+.item_display .item_box .sorted {
+	text-decoration: underline;
+	/* color: var(--purple); */
 }
 
 /****************************************************************
@@ -101,23 +116,10 @@ a:hover {
 	font-weight: 400;
 	line-height: 1.4em;
 }
-
-/****************************************************************
-**  MEDIA QUERIES
-*/
-
-/*-------- BOOTSTRAP media queries ---------*/
-/* XS >= 0 - default - SEE ABOVE */
-/* SM >= 768 */
-@media screen and (min-width: 768px) { 
+.txt_3 {
+	font-size: 0.8em;
+	font-weight: 300;
 }
-/* MD >= 992 */
-@media screen and (min-width: 992px) {
-}
-/* LG >= 1200 */
-@media screen and (min-width: 1200px) {
-}
-/*------------------------------------------*/
 
 /****************************************************************
 **  UTILITY
